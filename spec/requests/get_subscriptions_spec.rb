@@ -49,5 +49,24 @@ describe 'The Subscriptions API' do
         expect(subscription[:attributes].keys.size).to eq(6)
       end
     end
+
+    it 'returns an error when an invalid customer id is used to get all favorites' do
+      headers = {
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'        
+                }
+      
+      get "/api/v1/customers/1234567890/subscriptions", headers: headers
+
+      error_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(400)
+
+      expect(error_data).to be_a(Hash)
+      expect(error_data).to have_key(:message)
+      expect(error_data[:message]).to eq('No record found')
+      expect(error_data).to have_key(:errors)
+      expect(error_data[:errors]).to eq("Couldn't find Customer with 'id'=1234567890")
+    end
   end
 end
