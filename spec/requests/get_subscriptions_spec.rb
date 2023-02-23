@@ -68,5 +68,23 @@ describe 'The Subscriptions API' do
       expect(error_data).to have_key(:errors)
       expect(error_data[:errors]).to eq("Couldn't find Customer with 'id'=1234567890")
     end
+
+    it 'returns an empty array if the customer has no subscriptions' do
+      headers = {
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'        
+                }
+      
+      get "/api/v1/customers/#{@customer3.id}/subscriptions", headers: headers
+
+      no_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful 
+      expect(response.status).to eq(200)
+
+      expect(no_data).to be_a(Hash)
+      expect(no_data).to have_key(:data)
+      expect(no_data[:data]).to eq([])
+    end
   end
 end
