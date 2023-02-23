@@ -1,8 +1,8 @@
 class Api::V1::SubscriptionsController < ApplicationController
   before_action :find_customer
-  
+
   def index
-    require 'pry'; binding.pry
+    render json: SubscriptionSerializer.new(@customer.subscriptions)
   end
 
   private

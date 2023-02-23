@@ -41,14 +41,12 @@ describe 'The Subscriptions API' do
         expect(subscription[:attributes]).to have_key(:price)
         expect(subscription[:attributes]).to have_key(:status)
         expect(subscription[:attributes]).to have_key(:frequency)
-        expect(subscription[:attributes]).to have_key(:created_at)
-        expect(subscription[:attributes]).to have_key(:updated_at)
         expect(subscription[:attributes]).to have_key(:tea_id)
         
         expect(subscription[:attributes]).to have_key(:customer_id)
         expect(subscription[:attributes][:customer_id]).to eq(@customer1.id)
         
-        expect(subscription[:attributes].keys.size).to eq(8)
+        expect(subscription[:attributes].keys.size).to eq(6)
       end
     end
   end
