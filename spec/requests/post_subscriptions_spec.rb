@@ -45,5 +45,33 @@ describe 'The Subscriptions API' do
       expect(new_sub.customer_id).to eq(@customer.id)
       expect(new_sub.tea_id).to eq(@tea.id)
     end
+
+    it 'returns an error if a required attribute is missing' do
+      sub_params = {
+                        title: 'Tea Taster',
+                        price: 1500,
+                        status: 'active',
+                        customer_id: @customer.id,
+                        tea_id: @tea.id
+                   }
+
+      headers = {
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'        
+                }
+
+      post "/api/v1/customers/#{@customer.id}/subscriptions", headers: headers, params: JSON.generate(sub_params)
+
+      error_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(Subscription.all.count).to eq(0)
+      expect(response.status).to eq(400)
+  
+      expect(error_data).to have_key(:message)
+      expect(error_data[:message]).to eq("Record is missing one or more attributes")
+  
+      expect(error_data).to have_key(:errors)
+      expect(error_data[:errors]).to eq(["Frequency can't be blank"])
+    end
   end
 end
