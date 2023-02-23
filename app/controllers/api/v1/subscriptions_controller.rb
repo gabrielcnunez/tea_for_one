@@ -5,6 +5,10 @@ class Api::V1::SubscriptionsController < ApplicationController
     render json: SubscriptionSerializer.new(@customer.subscriptions)
   end
 
+  def create
+    
+  end
+
   private
 
     def find_customer
