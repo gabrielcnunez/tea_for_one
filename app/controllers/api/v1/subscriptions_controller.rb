@@ -7,8 +7,11 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   def create
     subscription = Subscription.new(sub_params)
-    subscription.save
-    render json: { success: "Subscription added successfully!" }, status: :created
+    if subscription.save
+      render json: { success: "Subscription added successfully!" }, status: :created
+    else
+      render json: ErrorSerializer.missing_attributes(subscription.errors.full_messages), status: :bad_request
+    end
   end
 
   private
