@@ -6,7 +6,9 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def create
-    require 'pry'; binding.pry
+    subscription = Subscription.new(sub_params)
+    subscription.save
+    render json: { success: "Subscription added successfully!" }, status: :created
   end
 
   private
@@ -15,7 +17,7 @@ class Api::V1::SubscriptionsController < ApplicationController
       @customer = Customer.find(params[:customer_id])
     end
 
-    def subscription_params
+    def sub_params
       params.require(:subscription).permit(:title, :price, :status, :frequency, :customer_id, :tea_id)
     end
 end
