@@ -83,15 +83,15 @@ GET /api/v1/customers/1/subscriptions
 Sample JSON Response: <br>
 ```json
 {
-    "data": {
+    "data": [
         {
             "id": "2",
             "type": "subscription",
             "attributes": {
-                "title": "Platinum Plan",
-                "price": 3500,
-                "status": "cancelled",
-                "frequency": "weekly",
+                "title": "Silver Plan",
+                "price": 1500,
+                "status": "active",
+                "frequency": "monthly",
                 "customer_id": 1,
                 "tea_id": 3
             }
