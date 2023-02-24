@@ -50,7 +50,7 @@ describe 'The Subscriptions API' do
       end
     end
 
-    it 'returns an error when an invalid customer id is used to get all favorites' do
+    it 'returns an error when an invalid customer id is used to get all subscriptions' do
       headers = {
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json'        
