@@ -24,3 +24,6 @@
 
 # Ignore all coverage files
 /coverage
+
+# Ignore .DS_Store file
+.DS_Store
