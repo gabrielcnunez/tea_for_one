@@ -23,7 +23,7 @@ describe 'The Subscriptions API' do
                      'Accept' => 'application/json'        
                 }
 
-      patch "/api/v1/customers/#{@customer.id}/subscriptions", headers: headers, params: JSON.generate(patch_params)
+      patch "/api/v1/customers/#{@customer.id}/subscriptions/#{@subscription.id}", headers: headers, params: JSON.generate(patch_params)
 
       expect(Subscription.all.count).to eq(1)
 
