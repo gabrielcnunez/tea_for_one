@@ -39,5 +39,61 @@ describe 'The Subscriptions API' do
       expect(cancelled_sub.customer_id).to eq(@subscription.customer_id)      
       expect(cancelled_sub.tea_id).to eq(@subscription.tea_id)      
     end
+
+    it 'returns an error if required attributes are missing' do
+      error_params = {
+                        title: @subscription.title,
+                        price: @subscription.price,
+                        status: '',
+                        frequency: '',
+                        customer_id: @subscription.customer_id,
+                        tea_id: @subscription.tea_id
+                   }
+
+      headers = {
+                     'Content-Type' => 'application/json',
+                     'Accept' => 'application/json'        
+                }
+
+      patch "/api/v1/customers/#{@customer.id}/subscriptions/#{@subscription.id}", headers: headers, params: JSON.generate(error_params)
+
+      error_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(400)
+  
+      expect(error_data).to have_key(:message)
+      expect(error_data[:message]).to eq("Record is missing one or more attributes")
+  
+      expect(error_data).to have_key(:errors)
+      expect(error_data[:errors]).to eq(["Status can't be blank", "Frequency can't be blank"])
+    end
+
+    it 'returns an error when an invalid subscription id is used to update a subscription' do
+      patch_params = {
+                        title: @subscription.title,
+                        price: @subscription.price,
+                        status: 'cancelled',
+                        frequency: @subscription.frequency,
+                        customer_id: @subscription.customer_id,
+                        tea_id: @subscription.tea_id
+                   }
+
+      headers = {
+                     'Content-Type' => 'application/json',
+                     'Accept' => 'application/json'        
+                }
+
+      patch "/api/v1/customers/#{@customer.id}/subscriptions/1234567890", headers: headers, params: JSON.generate(patch_params)
+
+      error_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(400)
+
+      expect(error_data).to be_a(Hash)
+      expect(error_data).to have_key(:message)
+      expect(error_data[:message]).to eq('No record found')
+      expect(error_data).to have_key(:errors)
+      expect(error_data[:errors]).to eq("Couldn't find Subscription with 'id'=1234567890")
+    end
   end
 end
