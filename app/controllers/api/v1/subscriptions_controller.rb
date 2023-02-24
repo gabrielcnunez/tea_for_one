@@ -14,6 +14,15 @@ class Api::V1::SubscriptionsController < ApplicationController
     end
   end
 
+  def update
+    subscription = Subscription.update(params[:id], sub_params)
+    if subscription.save
+      render json: SubscriptionSerializer.new(subscription)
+    else
+      render json: ErrorSerializer.missing_attributes(subscription.errors.full_messages), status: :bad_request
+    end
+  end
+
   private
 
     def find_customer
