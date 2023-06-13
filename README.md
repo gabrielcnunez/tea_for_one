@@ -199,8 +199,8 @@ Sample JSON Response: <br>
   </tr>
   <tr>
     <td>
-      <div align="center"><a href="https://github.com/MisterJackpots">GitHub</a><br>
-      <a href="https://www.linkedin.com/in/gabriel-c-nunez/">LinkedIn</a></div>
+      <div align="center"><a href="https://github.com/gabrielcnunez">GitHub</a><br>
+      <a href="https://www.linkedin.com/in/gabriel-nunez-az/">LinkedIn</a></div>
     </td>
   </tr>
 </table>
